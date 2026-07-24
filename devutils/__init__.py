@@ -1,7 +1,7 @@
 """Small, dependency-free helpers."""
 
 from devutils.control import retry
-from devutils.iterables import chunked, unique
+from devutils.iterables import chunked, partition, unique
 from devutils.mappings import deep_merge, flatten_dict
 from devutils.parsing import parse_bool
 from devutils.size import humanize_bytes
@@ -18,6 +18,7 @@ __all__ = [
     "human_duration",
     "humanize_bytes",
     "parse_bool",
+    "partition",
     "retry",
     "slugify",
     "truncate",
