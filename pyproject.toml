@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Small, dependency-free Python helpers"
 readme = "README.md"
 requires-python = ">=3.8"
-license = { text = "MIT" }
+license = { file = "LICENSE" }
 
 [tool.setuptools]
 packages = ["devutils"]
