@@ -5,7 +5,7 @@ from devutils.iterables import chunked
 from devutils.mappings import deep_merge, flatten_dict
 from devutils.size import humanize_bytes
 from devutils.text import slugify
-from devutils.timing import Timer
+from devutils.timing import Timer, human_duration
 
 __version__ = "0.1.0"
 
@@ -14,6 +14,7 @@ __all__ = [
     "chunked",
     "deep_merge",
     "flatten_dict",
+    "human_duration",
     "humanize_bytes",
     "retry",
     "slugify",
