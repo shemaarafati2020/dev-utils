@@ -26,3 +26,31 @@ def deep_merge(base, override):
             merged[key] = copy.deepcopy(value)
 
     return merged
+
+
+def flatten_dict(mapping, separator=".", prefix=""):
+    """Flatten a nested dict into a single level of dotted keys.
+
+    Only dicts are descended into — lists and empty dicts are treated as
+    leaf values, so the result round-trips back through a config loader.
+
+    >>> flatten_dict({"db": {"host": "localhost"}})
+    {'db.host': 'localhost'}
+    """
+    flat = {}
+
+    for key, value in mapping.items():
+        key = str(key)
+        if separator in key:
+            raise ValueError(
+                "key %r already contains the separator %r" % (key, separator)
+            )
+
+        full_key = prefix + separator + key if prefix else key
+
+        if isinstance(value, dict) and value:
+            flat.update(flatten_dict(value, separator, full_key))
+        else:
+            flat[full_key] = value
+
+    return flat
