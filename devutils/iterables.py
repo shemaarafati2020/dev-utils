@@ -44,3 +44,25 @@ def unique(iterable, key=None):
         if marker not in seen:
             seen.add(marker)
             yield item
+
+
+def partition(predicate, iterable):
+    """Split ``iterable`` into ``(matching, rest)`` lists.
+
+    Unlike the ``itertools`` recipe, this consumes the input exactly once
+    and calls ``predicate`` exactly once per item — so it is safe with
+    generators and with expensive or side-effecting predicates.
+
+    >>> partition(lambda n: n % 2 == 0, range(6))
+    ([0, 2, 4], [1, 3, 5])
+    """
+    matching = []
+    rest = []
+
+    for item in iterable:
+        if predicate(item):
+            matching.append(item)
+        else:
+            rest.append(item)
+
+    return matching, rest
