@@ -2,7 +2,7 @@
 
 from devutils.control import memoize, retry
 from devutils.fs import atomic_write
-from devutils.iterables import chunked, partition, unique
+from devutils.iterables import chunked, partition, unique, windowed
 from devutils.mappings import deep_merge, flatten_dict
 from devutils.parsing import parse_bool, parse_duration, parse_size
 from devutils.size import humanize_bytes
@@ -28,4 +28,5 @@ __all__ = [
     "slugify",
     "truncate",
     "unique",
+    "windowed",
 ]
