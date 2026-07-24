@@ -2,7 +2,13 @@
 
 from devutils.control import memoize, retry
 from devutils.fs import atomic_write
-from devutils.iterables import chunked, partition, unique, windowed
+from devutils.iterables import (
+    chunked,
+    group_by,
+    partition,
+    unique,
+    windowed,
+)
 from devutils.mappings import deep_merge, flatten_dict
 from devutils.parsing import parse_bool, parse_duration, parse_size
 from devutils.size import humanize_bytes
@@ -17,6 +23,7 @@ __all__ = [
     "chunked",
     "deep_merge",
     "flatten_dict",
+    "group_by",
     "human_duration",
     "humanize_bytes",
     "memoize",

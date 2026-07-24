@@ -91,3 +91,25 @@ def windowed(iterable, size):
         window.append(item)
         if len(window) == size:
             yield tuple(window)
+
+
+def group_by(key, iterable, transform=None):
+    """Group items into a dict of lists keyed by ``key(item)``.
+
+    Unlike :func:`itertools.groupby`, the input does not need to be
+    sorted — that function only groups *adjacent* equal keys, which
+    silently produces duplicate groups on unsorted data.
+
+    Returns a plain dict, not a defaultdict, so a missing key raises
+    ``KeyError`` instead of quietly creating an empty group.
+
+    >>> group_by(len, ["a", "bb", "cc", "d"])
+    {1: ['a', 'd'], 2: ['bb', 'cc']}
+    """
+    grouped = {}
+
+    for item in iterable:
+        value = item if transform is None else transform(item)
+        grouped.setdefault(key(item), []).append(value)
+
+    return grouped
