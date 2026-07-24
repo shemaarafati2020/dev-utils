@@ -74,3 +74,51 @@ def parse_size(value):
         raise ValueError("unknown size unit %r" % (unit,))
 
     return int(round(float(number) * _SIZE_UNITS[unit]))
+
+
+_DURATION_SCALE = {
+    "ms": 0.001,
+    "s": 1,
+    "m": 60,
+    "h": 3600,
+    "d": 86400,
+    "w": 604800,
+}
+
+# "ms" must precede "m" in the alternation, or "5ms" parses as 5 minutes.
+_DURATION_UNIT = "(?:ms|s|m|h|d|w)"
+_DURATION_COMPONENT = re.compile(r"(\d+(?:\.\d+)?)\s*(%s)" % _DURATION_UNIT)
+_DURATION_WHOLE = re.compile(r"(?:\d+(?:\.\d+)?\s*%s\s*)+" % _DURATION_UNIT)
+_BARE_NUMBER = re.compile(r"\d+(?:\.\d+)?")
+
+
+def parse_duration(value):
+    """Parse a duration string such as ``"1h30m"`` into seconds.
+
+    The inverse of :func:`devutils.human_duration` — every value that
+    function emits parses back to the same number. A bare number is read
+    as seconds.
+
+    >>> parse_duration("1h30m")
+    5400
+    >>> parse_duration("500ms")
+    0.5
+    """
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if value < 0:
+            raise ValueError("duration must be non-negative")
+        return value
+
+    text = str(value).strip().lower()
+
+    if _BARE_NUMBER.fullmatch(text):
+        total = float(text)
+    elif _DURATION_WHOLE.fullmatch(text):
+        total = sum(
+            float(number) * _DURATION_SCALE[unit]
+            for number, unit in _DURATION_COMPONENT.findall(text)
+        )
+    else:
+        raise ValueError("cannot parse %r as a duration" % (value,))
+
+    return int(total) if float(total).is_integer() else total
