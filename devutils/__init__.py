@@ -1,6 +1,6 @@
 """Small, dependency-free helpers."""
 
-from devutils.control import retry
+from devutils.control import memoize, retry
 from devutils.fs import atomic_write
 from devutils.iterables import chunked, partition, unique
 from devutils.mappings import deep_merge, flatten_dict
@@ -19,6 +19,7 @@ __all__ = [
     "flatten_dict",
     "human_duration",
     "humanize_bytes",
+    "memoize",
     "parse_bool",
     "partition",
     "retry",
