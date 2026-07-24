@@ -4,7 +4,7 @@ from devutils.control import retry
 from devutils.iterables import chunked
 from devutils.mappings import deep_merge, flatten_dict
 from devutils.size import humanize_bytes
-from devutils.text import slugify
+from devutils.text import slugify, truncate
 from devutils.timing import Timer, human_duration
 
 __version__ = "0.1.0"
@@ -18,4 +18,5 @@ __all__ = [
     "humanize_bytes",
     "retry",
     "slugify",
+    "truncate",
 ]
