@@ -1,5 +1,6 @@
 """Iterable helpers."""
 
+import collections
 import itertools
 
 
@@ -66,3 +67,27 @@ def partition(predicate, iterable):
             rest.append(item)
 
     return matching, rest
+
+
+def windowed(iterable, size):
+    """Yield overlapping tuples of ``size`` consecutive items.
+
+    Where :func:`chunked` splits an iterable into disjoint batches, this
+    slides — useful for comparing each item with its neighbours.
+
+    Yields a new tuple per window rather than a live view, so windows can
+    be collected into a list without aliasing each other. Nothing is
+    yielded if the input is shorter than ``size``.
+
+    >>> list(windowed([1, 2, 3, 4], 2))
+    [(1, 2), (2, 3), (3, 4)]
+    """
+    if size < 1:
+        raise ValueError("size must be at least 1")
+
+    window = collections.deque(maxlen=size)
+
+    for item in iterable:
+        window.append(item)
+        if len(window) == size:
+            yield tuple(window)
