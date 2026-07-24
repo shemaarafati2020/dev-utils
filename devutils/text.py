@@ -25,3 +25,29 @@ def slugify(value, separator="-", max_length=None):
         value = value[:max_length].rstrip(separator)
 
     return value
+
+
+def truncate(text, length, suffix="…", whole_words=True):
+    """Shorten ``text`` to at most ``length`` characters including ``suffix``.
+
+    The returned string is never longer than ``length`` — the suffix is
+    budgeted for rather than appended on top, which is what makes this
+    safe for fixed-width columns.
+
+    >>> truncate("hello world", 8)
+    'hello…'
+    """
+    if len(suffix) > length:
+        raise ValueError("suffix is longer than the requested length")
+
+    if len(text) <= length:
+        return text
+
+    clipped = text[: length - len(suffix)]
+
+    if whole_words:
+        head, separator, _ = clipped.rpartition(" ")
+        if separator:
+            clipped = head
+
+    return clipped.rstrip() + suffix
