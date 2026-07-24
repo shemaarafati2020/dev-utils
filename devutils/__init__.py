@@ -1,6 +1,7 @@
 """Small, dependency-free helpers."""
 
 from devutils.control import retry
+from devutils.fs import atomic_write
 from devutils.iterables import chunked, partition, unique
 from devutils.mappings import deep_merge, flatten_dict
 from devutils.parsing import parse_bool
@@ -12,6 +13,7 @@ __version__ = "0.1.0"
 
 __all__ = [
     "Timer",
+    "atomic_write",
     "chunked",
     "deep_merge",
     "flatten_dict",
